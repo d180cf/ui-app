@@ -609,7 +609,7 @@ module testbench {
     // it creates the SVG board, sets up
     // mouse handlers and so on
     function renderBoard() {
-        console.warn('Creating a SVG board...');
+        console.log('Creating a SVG board...');
         ui = SVGGobanElement.create(board.size);
         updateBoard();
 
@@ -765,20 +765,19 @@ module testbench {
                     updateBoard();
 
                     if (qargs.autorespond) {
-                        if (qargs.check) {
-                            vm.note = `Checking if ${stone.label.string(-color)} needs to respond...`;
-
-                            setTimeout(() => {
+                        setTimeout(() => {
+                            if (qargs.check) {
+                                vm.note = `Checking if ${stone.label.string(-color)} needs to respond...`;
                                 solve(null, board, color, vm.km).then(move => {
                                     if (color * move < 0)
                                         vm.note = stone.label.string(-color) + ' does not need to respond';
                                     else
                                         solveAndRender(-color, vm.km);
                                 });
-                            });
-                        } else {
-                            solveAndRender(-color, vm.km);
-                        }
+                            } else {
+                                solveAndRender(-color, vm.km);
+                            }
+                        }, qargs.ard);
                     }
                 }
 

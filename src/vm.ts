@@ -103,6 +103,7 @@ module testbench {
         }
 
         set note(text: string) {
+            console.log(text);
             $('#comment').text(text);
         }
 

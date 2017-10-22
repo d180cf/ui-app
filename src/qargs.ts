@@ -30,6 +30,9 @@ module testbench {
         /** Once a tsumego is solved, the app can respond without clicking the solve button every time. */
         autorespond: boolean;
 
+        /** Delay before auto-response (default 100 ms) */
+        ard: number;
+
         /** In the auto respond mode checks if a response is needed indeed. */
         check: boolean;
 
@@ -55,6 +58,9 @@ module testbench {
 
         if (qargs.autorespond === undefined)
             qargs.autorespond = true;
+
+        if (qargs.ard === undefined)
+            qargs.ard = 100;
 
         if (qargs.check === undefined)
             qargs.check = true;
