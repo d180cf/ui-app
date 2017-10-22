@@ -11,7 +11,7 @@ if [[ $TRAVIS_BRANCH == "master" && $TRAVIS_PULL_REQUEST == "false" ]]; then
 echo "Starting to update ${GH_REPO}"
 
 #copy data we're interested in to other place
-cp -R .bin $HOME/site
+cp -R .bin $HOME/tsumego-js-ui-app
 
 #go to home and setup git
 cd $HOME
@@ -23,7 +23,7 @@ git clone https://${GH_TOKEN}@github.com/${GH_USER}/${GH_REPO} repo
 
 echo "Copying the site files..."
 cd repo
-cp -Rf $HOME/site/* .
+cp -Rf $HOME/tsumego-js-ui-app/* .
 
 echo "Creating a new commit..."
 git add -f .
