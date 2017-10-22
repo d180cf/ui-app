@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/d180cf/ui-app.svg?branch=master)](https://travis-ci.org/d180cf/ui-app)
+
 # Build
 
 In the root project dir to build a deubggable version of the testbench:
