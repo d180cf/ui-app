@@ -1,0 +1,13 @@
+{
+  "files": [
+    "src/event.ts",
+    "src/storage.ts",
+    "src/app.ts"
+  ],
+  "compilerOptions": {
+    "out": ".bin/app.js",
+    "target": "es6",
+    "experimentalDecorators": true,
+    "sourceMap": true
+  }
+}
