@@ -46,6 +46,12 @@ function babel(args) {
     sourceMaps && fs.writeFileSync(outPath + '.map', JSON.stringify(es5.map, null, '\t'), 'utf8');
 }
 
+desc('Empties the .bin folder');
+task('clean', () => {
+    jake.rmRf('.bin');
+    jake.mkdirP('.bin');
+});
+
 desc('Builds the testbench app.');
 task('tb', { async: true }, mode => {
     console.log('building the testbench app...');
@@ -78,8 +84,6 @@ task('tb', { async: true }, mode => {
 desc('Builds the site contents.');
 task('site', ['tb'], () => {
     console.log('building the site...');
-    jake.rmRf('.bin');
-    jake.mkdirP('.bin');
     jake.cpR('libs', '.bin');
     jake.cpR('node_modules/problems', '.bin/problems');
     jake.rmRf('.bin/problems/node_modules');
@@ -94,6 +98,6 @@ task('site', ['tb'], () => {
 });
 
 desc('Builds everything.');
-task('default', ['tb'], () => {
+task('default', ['clean', 'site'], () => {
     console.log('done!');
 });
