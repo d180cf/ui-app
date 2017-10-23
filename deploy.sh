@@ -10,14 +10,14 @@ if [[ $TRAVIS_BRANCH == "master" && $TRAVIS_PULL_REQUEST == "false" ]]; then
 
 echo "Starting to update ${GH_REPO}"
 
-DESCRIPTION="Build $TRAVIS_BUILD_NUMBER ($TRAVIS_REPO_SLUG $TRAVIS_BRANCH $TRAVIS_COMMIT)"
+DESCRIPTION="Build $TRAVIS_BUILD_NUMBER ($TRAVIS_REPO_SLUG $TRAVIS_BRANCH ${TRAVIS_COMMIT:0:7})"
 DESTINATION=$HOME/tsumego-js-ui-app
 
 #copy data we're interested in to other place
 cp -R .bin $DESTINATION
 
 #create a file with the build info
-echo "$DESCRIPTION" > $DESTINATION/.build
+echo "$DESCRIPTION" > "$DESTINATION/BUILD"
 
 #go to home and setup git
 cd $HOME

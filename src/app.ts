@@ -161,7 +161,7 @@ module testbench {
         }
 
         // display the build info if available
-        send('GET', '.build').then(data => {
+        send('GET', 'BUILD').then(data => {
             vm.note = data;
         });
 
