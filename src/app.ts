@@ -214,35 +214,41 @@ module testbench {
                 directory.remove(path);
             });
 
-            const lsdata = ls.data;
+            // fetching problems is a very slow operation:
+            // do that only when the tab becomes visible
+            $('#tab-dir-header').one('click', () => {
+                console.log('Loading SGF files from LS...');
+                const lsdata = ls.data;
 
-            for (let path in lsdata)
-                directory.add(path);
+                for (let path in lsdata)
+                    directory.add(path);
 
-            send('GET', '/problems/manifest.json').then(data => {
-                const manifest = JSON.parse(data);
-                console.log('manifest time:', new Date(manifest.time));
+                console.log('Loading problems from manifest.json...');
+                send('GET', '/problems/manifest.json').then(data => {
+                    const manifest = JSON.parse(data);
+                    console.log('manifest time:', new Date(manifest.time));
 
-                for (const dir of manifest.dirs) {
-                    for (const path of dir.problems) {
-                        send('GET', '/problems/' + path).then(sgf => {
-                            const root = tsumego.SGF.parse(sgf);
+                    for (const dir of manifest.dirs) {
+                        for (const path of dir.problems) {
+                            send('GET', '/problems/' + path).then(sgf => {
+                                const root = tsumego.SGF.parse(sgf);
 
-                            if (!root)
-                                throw SyntaxError('Invalid SGF from ' + path);
+                                if (!root)
+                                    throw SyntaxError('Invalid SGF from ' + path);
 
-                            const name = path.replace('.sgf', '');
+                                const name = path.replace('.sgf', '');
 
-                            // the problem is considered to be hard if it
-                            // doesn't appear in unit tests
-                            directory.item(name).hard = !/\bPL\[/.test(sgf);
-                        }).catch(err => {
-                            console.log(err.stack);
-                        });
+                                // the problem is considered to be hard if it
+                                // doesn't appear in unit tests
+                                directory.item(name).hard = !/\bPL\[/.test(sgf);
+                            }).catch(err => {
+                                console.log(err.stack);
+                            });
+                        }
                     }
-                }
-            }).catch(err => {
-                console.log(err.stack);
+                }).catch(err => {
+                    console.log(err.stack);
+                });
             });
 
             if (!qargs.debug) {
