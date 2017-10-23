@@ -160,6 +160,11 @@ module testbench {
             vm.kmVisible = false;
         }
 
+        // display the build info if available
+        send('GET', '.build').then(data => {
+            vm.note = data;
+        });
+
         Promise.resolve().then(() => {
             const directory = new Directory('#directory');
 
