@@ -17,7 +17,7 @@ DESTINATION=$HOME/tsumego-js-ui-app
 cp -R .bin $DESTINATION
 
 #create a file with the build info
-echo $DESCRIPTION > $DESTINATION/.build
+echo "$DESCRIPTION" > $DESTINATION/.build
 
 #go to home and setup git
 cd $HOME
@@ -33,7 +33,7 @@ cp -Rf $DESTINATION/* .
 
 echo "Creating a new commit..."
 git add -f .
-git commit -m $DESCRIPTION
+git commit -m "$DESCRIPTION"
 
 echo "Pushing changes..."
 git push
