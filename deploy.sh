@@ -23,8 +23,6 @@ echo "$DESCRIPTION" > "$DESTINATION/BUILD"
 cd $HOME
 git config --global user.email "d180cf@gmail.com"
 git config --global user.name "d180cf (via Travis CI)"
-
-echo "Cloning the repo..."
 git clone https://${GH_TOKEN}@github.com/${GH_USER}/${GH_REPO} repo
 
 echo "Copying the site files..."
