@@ -33,6 +33,15 @@ module testbench {
                         vm.tool = null;
                 });
 
+                $('#download').click(() => {
+                    const name = location.hash.slice(1).replace(/[^\w]/g, '-') || 'file';
+                    const blob = new Blob([vm.sgf], { type: 'application/x-go-sgf' });
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = name + '.sgf';
+                    a.click();
+                });
+
                 window.addEventListener('resize', event => {
                     vm.resized.fire();
                 });
