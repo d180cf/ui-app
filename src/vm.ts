@@ -8,6 +8,7 @@ module testbench {
     type Tool = 'SQ' | 'MA' | 'AB' | 'AW' | 'XX';
 
     export const vm = new class VM {
+        sgfpasted = new Event<(sgf: string) => void>();
         sgfchanged = new Event<() => void>();
         resized = new Event<() => void>();
 
@@ -79,6 +80,8 @@ module testbench {
                             const board = new tsumego.Board(sgf);
                             console.log('size = ' + board.size);
                             console.log(board.text);
+
+                            vm.sgfpasted.fire(sgf);
                         };
                     }
                 });                

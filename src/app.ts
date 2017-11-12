@@ -149,6 +149,12 @@ module testbench {
             vm.isVertical = false;
     }
 
+    vm.sgfpasted.add(sgf => {
+        const path = 'pasted/' + Date.now();
+        ls.set(path, sgf);
+        location.hash = '#' + path;
+    });
+
     vm.resized.add(updateVerticalLayout);
 
     window.addEventListener('load', () => {

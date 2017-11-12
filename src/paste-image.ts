@@ -16,8 +16,8 @@ module testbench {
 
         console.log('detecting circles...');
 
-        const b_max = 0.25;
-        const w_min = 0.80;
+        const b_max = 0.4;
+        const w_min = 0.7;
 
         const b_stones = [];
         const w_stones = [];
@@ -70,8 +70,8 @@ module testbench {
 
         const sgf = '(;FF[4]'
             + 'SZ[' + sz + ']'
-            + 'AB' + nss(b_stones)
-            + 'AW' + nss(w_stones)
+            + (b_stones.length > 0 ? 'AB' + nss(b_stones) : '')
+            + (w_stones.length > 0 ? 'AW' + nss(w_stones) : '')
             + ')';
 
         console.log('writing data back to image...');
