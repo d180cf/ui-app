@@ -2,6 +2,7 @@
 /// <reference path="kb.ts" />
 /// <reference path="xhr.ts" />
 /// <reference path="../node_modules/svg-goban/goban.ts" />
+/// <reference path="paste-image.ts" />
 /// <reference path="vm.ts" />
 /// <reference path="directory.ts" />
 /// <reference path="debugger.ts" />
@@ -147,6 +148,12 @@ module testbench {
         if (ratio > 1.05)
             vm.isVertical = false;
     }
+
+    vm.sgfpasted.add(sgf => {
+        const path = 'pasted/' + Date.now();
+        ls.set(path, sgf);
+        location.hash = '#' + path;
+    });
 
     vm.resized.add(updateVerticalLayout);
 

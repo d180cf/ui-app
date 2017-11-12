@@ -8,6 +8,7 @@ module testbench {
     type Tool = 'SQ' | 'MA' | 'AB' | 'AW' | 'XX';
 
     export const vm = new class VM {
+        sgfpasted = new Event<(sgf: string) => void>();
         sgfchanged = new Event<() => void>();
         resized = new Event<() => void>();
 
@@ -45,6 +46,45 @@ module testbench {
                 window.addEventListener('resize', event => {
                     vm.resized.fire();
                 });
+
+                window.addEventListener('paste', (event: any) => {
+                    console.log('inspecting clipboard...');
+                    for (const item of event.clipboardData.items) {
+                        console.log(item);
+            
+                        if (!item.type.startsWith('image/')) {
+                            console.log('skipping the item because it\'s not an image');
+                            continue;
+                        }
+            
+                        const blob = item.getAsFile();
+                        const source = URL.createObjectURL(blob);
+            
+                        const image = document.createElement('img');
+                        image.src = source;
+            
+                        image.onload = () => {
+                            const canvas = document.createElement('canvas');
+                            const ctx2d = canvas.getContext('2d');
+            
+                            console.log('got image: ' + image.width + ' x ' + image.height);
+                            canvas.width = image.width;
+                            canvas.height = image.height;
+                            ctx2d.drawImage(image, 0, 0);
+            
+                            console.log('detecting circles...');
+                            const idata = ctx2d.getImageData(0, 0, canvas.width, canvas.height);
+                            const sgf = parseimg(idata.data, [idata.width, idata.height]);
+            
+                            console.log('got sgf: ' + sgf);
+                            const board = new tsumego.Board(sgf);
+                            console.log('size = ' + board.size);
+                            console.log(board.text);
+
+                            vm.sgfpasted.fire(sgf);
+                        };
+                    }
+                });                
             });
         }
 
