@@ -986,4 +986,25 @@ module testbench {
             throw err;
         });
     }
+
+    declare const evaldcnn;
+
+    $(() => {
+        $('#dcnn').click(() => {
+            console.log('Evaluating DCNN at every intersection...');
+
+            for (let y = 0; y < board.size; y++) {
+                for (let x = 0; x < board.size; x++) {
+                    if (board.get(x, y)) {
+                        const p = evaldcnn(board, [x, y]);
+                        const s = ui.SQ.add(x, y);
+
+                        s.setAttribute('fill', p < 0.5 ?
+                            `rgba(255, 0, 0, ${1 - 2 * p})` :
+                            `rgba(0, 255, 0, ${2 * p - 1})`);
+                    }
+                }
+            }
+        });
+    });
 }

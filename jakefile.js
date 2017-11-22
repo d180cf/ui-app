@@ -88,6 +88,8 @@ task('site', ['tb'], () => {
     jake.cpR('node_modules/problems', '.bin/problems');
     jake.rmRf('.bin/problems/node_modules');
 
+    jake.cpR('node_modules/dcnn-eval/.bin/dcnn.js', '.bin');
+
     jake.cpR('node_modules/tsumego.js/bin/tsumego.js', '.bin');
     jake.cpR('node_modules/tsumego.js/bin/tsumego.es5.js', '.bin');
     jake.cpR('node_modules/tsumego.js/bin/tsumego.es6.js', '.bin');

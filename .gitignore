@@ -2,3 +2,4 @@
 node_modules/
 .ntvs_analysis.dat
 .vs/
+package-lock.json
